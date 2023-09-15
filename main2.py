@@ -44,11 +44,15 @@ async def uart_terminal():
 
         return False
 
-    device = await BleakScanner.find_device_by_filter(match_nus_uuid, timeout=20)
+    # device = await BleakScanner.find_device_by_filter(match_nus_uuid, timeout=20)
+    device = await BleakScanner(service_uuids=['00001530-1212-efde-1523-785feabcd123', '00001800-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb', '0000180a-0000-1000-8000-00805f9b34fb', '6e400001-b5a3-f393-e0a9-e50e24dcca9e', 'ee0c2080-8786-40ba-ab96-99b91ac981d8']).find_device_by_filter(match_nus_uuid, timeout=20)
 
     if device is None:
         print("no matching device found, you may need to edit match_nus_uuid().")
         sys.exit(1)
+
+    print(device)
+    print(device.details)
 
     def handle_disconnect(_: BleakClient):
         print("Device was disconnected, goodbye.")
